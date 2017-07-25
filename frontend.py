@@ -14,7 +14,9 @@ exit
 """
 
 from tkinter import *
-import backend
+from backend import Database
+
+database=Database("plantings.db")
 
 def get_selected_row(event):
     global selected_tuple
@@ -35,24 +37,24 @@ def get_selected_row(event):
 
 def view_command():
     list1.delete(0,END)
-    for row in backend.view():
+    for row in database.view():
         list1.insert(END,row)
 
 def search_command():
     list1.delete(0,END)
-    for row in backend.search(crop_text.get(),quantity_text.get(),date_text.get(),outcome_text.get()):
+    for row in database.search(crop_text.get(),quantity_text.get(),date_text.get(),outcome_text.get()):
         list1.insert(END,row)
 
 def insert_command():
-    backend.insert(crop_text.get(),quantity_text.get(),date_text.get(),outcome_text.get(),notes_text.get())
+    database.insert(crop_text.get(),quantity_text.get(),date_text.get(),outcome_text.get(),notes_text.get())
     view_command()
 
 def delete_command():
-    backend.delete(selected_tuple[0])
+    database.delete(selected_tuple[0])
     view_command()
 
 def update_command():
-    backend.update(selected_tuple[0],crop_text.get(),quantity_text.get(),date_text.get(),outcome_text.get(),notes_text.get())
+    database.update(selected_tuple[0],crop_text.get(),quantity_text.get(),date_text.get(),outcome_text.get(),notes_text.get())
     view_command()
 
 window=Tk()
